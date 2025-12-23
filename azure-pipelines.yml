@@ -18,7 +18,11 @@ stages:
               configuration: release
               command: build
               projects: '**/*.sqlproj'
+              modifyOutputPath: .
           - task: PublishBuildArtifacts@1
             inputs:
-              PathtoPublish: '**/*.dacpac'
+              publishLocation: FilePath
+              ArtifactName: boh-schema.dacpac
+              PathtoPublish: $(System.DefaultWorkingDirectory)/**/*.dacpac
+
 
