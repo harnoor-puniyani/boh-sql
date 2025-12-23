@@ -1,0 +1,24 @@
+name: 1.0.$(Date:yyyy-mm-dd).$(rev:r)
+
+trigger:
+  batch: true
+  branches:
+    include:
+      - pr
+      - master
+  
+stages:
+  - stage: Build
+    displayName: Build Dacpac
+    jobs:
+      - job: Dacpac
+        steps:
+          - task: DotNetCoreCLI@2 
+            inputs:
+              configuration: release
+              command: build
+              projects: '**/*.sqlproj'
+          - task: PublishBuildArtifacts@1
+            inputs:
+              PathtoPublish: '**/*.dacpac'
+
